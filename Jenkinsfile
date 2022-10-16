@@ -25,15 +25,35 @@ pipeline{
                 }
             }
         }
+        stage('delete images'){
+            when{
+                docker images | grep sender
+            }
+            steps{
+                script{
+                    def senderImage = bat(label: '', returnStdout: true, script: "docker images | findstr sender")
+                    def receiverImage = bat(label: '', returnStdout: true, script: "docker images | findstr receiver")
+
+                    echo senderImage
+                    echo receiverImage
+
+                    if(senderImage != "") {
+                        bat '''
+                            docker rmi sender
+                        '''
+                    }
+                    if(receiverImage != "") {
+                        bat '''
+                            docker rmi receiver
+                        '''
+                    }
+                }
+            }
+        }
         stage('build images'){
             steps{
                 script{
-                    bat '''
-                        docker rmi sender
-                    '''
-                    bat '''
-                        docker rmi receiver
-                    '''
+
                     bat '''
                         docker build -t sender ./sender
                     '''
