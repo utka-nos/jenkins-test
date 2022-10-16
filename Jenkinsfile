@@ -28,7 +28,9 @@ pipeline{
         stage('setting docker env') {
             steps{
                 script{
-                    bat '@FOR /F "tokens=*" \%i IN (\'minikube -p minikube docker-env --shell cmd\') DO @\%i'
+                    bat 'minikube -p minikube docker-env --shell cmd > temp.cmd'
+                    bat 'call temp.cmd'
+                    bat 'del temp.cmd'
                 }
             }
         }
