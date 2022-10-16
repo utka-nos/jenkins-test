@@ -46,6 +46,21 @@ pipeline{
                 }
             }
         }
+        stage('kubectl apply images') {
+            steps{
+                script{
+                    bat '''
+                        kubectl apply -f kubernetes.yml
+                    '''
+                    bat '''
+                        kubectl get pods
+                    '''
+                    bat '''
+                        kubectl get services
+                    '''
+                }
+            }
+        }
 
     }
 
