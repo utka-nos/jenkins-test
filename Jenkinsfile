@@ -29,6 +29,12 @@ pipeline{
             steps{
                 script{
                     bat '''
+                        docker rmi sender
+                    '''
+                    bat '''
+                        docker rmi receiver
+                    '''
+                    bat '''
                         docker build -t sender ./sender
                     '''
                     bat '''
@@ -50,7 +56,7 @@ pipeline{
             steps{
                 script{
                     bat '''
-                        kubectl apply -f kubernetes.yml
+                        kubectl apply -f kubernetes.yaml
                     '''
                     bat '''
                         kubectl get pods
