@@ -28,7 +28,11 @@ pipeline{
         stage('setting docker env') {
             steps{
                 script{
-                    bat 'minikube -p minikube docker-env --shell cmd > temp.cmd'
+                    bat '''
+                        minikube -p minikube docker-env --shell cmd > temp.cmd
+                        call temp.cmd
+                        docker images
+                    '''
                     bat 'call temp.cmd'
                     bat 'del temp.cmd'
 
@@ -99,6 +103,8 @@ pipeline{
                     bat 'minikube -p minikube docker-env -u --shell cmd > temp.cmd'
                     bat 'call temp.cmd'
                     bat 'del temp.cmd'
+
+                    bat 'docker images'
                 }
             }
         }
