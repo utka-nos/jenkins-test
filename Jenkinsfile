@@ -28,18 +28,15 @@ pipeline{
         stage('delete images'){
             steps{
                 script{
-                    def senderImage = bat(label: '', returnStdout: true, script: "docker images | findstr sender")
-                    def receiverImage = bat(label: '', returnStdout: true, script: "docker images | findstr receiver")
+                    def images = bat(label: '', returnStdout: true, script: "docker images")
 
-                    echo senderImage
-                    echo receiverImage
+                    echo images
 
-                    if(senderImage != "") {
+
+                    if(images != "") {
                         bat '''
                             docker rmi sender
                         '''
-                    }
-                    if(receiverImage != "") {
                         bat '''
                             docker rmi receiver
                         '''
