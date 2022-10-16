@@ -64,12 +64,20 @@ pipeline{
                 }
             }
         }
+        stage('setting docker env') {
+            steps{
+                script{
+                    bat 'minikube -p minikube docker-env --shell cmd'
+                }
+            }
+        }
         stage('kubectl apply images') {
             steps{
                 script{
                     bat '''
                         kubectl apply -f kubernetes.yaml
                     '''
+                    sleep 10
                     bat '''
                         kubectl get pods
                     '''
