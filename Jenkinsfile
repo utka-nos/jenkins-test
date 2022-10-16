@@ -11,43 +11,18 @@ pipeline{
                 }
             }
         }
-        stage('mvn version'){
-            steps{
-                withMaven(maven: 'mvn-3.8.6'){
-                    script{
-                        bat 'mvn --version'
-                   }
-                }
-            }
-        }
-        stage('test'){
+        stage('build'){
             steps{
                 script{
-                    bat 'mvn --version'
+                    bat 'mvn clean install'
+                    bat 'cd ./sender'
+                    bat 'mvn package'
+                    bat 'cd ../receiver'
+                    bat 'mvn package'
                 }
             }
         }
-        stage('minikube'){
-            steps{
-                script{
-                    bat 'minikube ip'
-                }
-            }
-        }
-        stage('kubectl'){
-            steps{
-                script{
-                    bat 'kubectl get pods'
-                }
-            }
-        }
-        stage('docker'){
-            steps{
-                script{
-                    bat 'docker images'
-                }
-            }
-        }
+
     }
 
     post{
