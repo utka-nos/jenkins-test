@@ -25,29 +25,18 @@ pipeline{
                 }
             }
         }
-        stage('setting docker env') {
-            steps{
-                script{
-                    bat '''
-                        minikube -p minikube docker-env --shell cmd > temp.cmd
-                        call temp.cmd
-                        docker images
-                    '''
-                    bat 'call temp.cmd'
-                    bat 'del temp.cmd'
 
-                    bat 'docker images'
-                }
-            }
-        }
         stage('delete images'){
             steps{
                 script{
                     try{
                         bat '''
+                            minikube -p minikube docker-env --shell cmd > temp.cmd
+                            call temp.cmd
+                            docker images
+                            del temp.cmd
+
                             docker rmi sender
-                        '''
-                        bat '''
                             docker rmi receiver
                         '''
                     }
@@ -60,11 +49,20 @@ pipeline{
         stage('build images'){
             steps{
                 script{
-
                     bat '''
+                        minikube -p minikube docker-env --shell cmd > temp.cmd
+                        call temp.cmd
+                        docker images
+                        del temp.cmd
+
                         docker build -t sender ./sender
                     '''
                     bat '''
+                        minikube -p minikube docker-env --shell cmd > temp.cmd
+                        call temp.cmd
+                        docker images
+                        del temp.cmd
+
                         docker build -t receiver ./receiver
                     '''
                 }
@@ -84,6 +82,11 @@ pipeline{
             steps{
                 script{
                     bat '''
+                        minikube -p minikube docker-env --shell cmd > temp.cmd
+                        call temp.cmd
+                        docker images
+                        del temp.cmd
+
                         kubectl apply -f kubernetes.yaml
                     '''
                     sleep 10
@@ -93,18 +96,6 @@ pipeline{
                     bat '''
                         kubectl get services
                     '''
-                }
-            }
-        }
-
-        stage('unsetting docker env') {
-            steps{
-                script{
-                    bat 'minikube -p minikube docker-env -u --shell cmd > temp.cmd'
-                    bat 'call temp.cmd'
-                    bat 'del temp.cmd'
-
-                    bat 'docker images'
                 }
             }
         }
