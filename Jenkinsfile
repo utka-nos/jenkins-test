@@ -14,12 +14,12 @@ pipeline{
         stage('build'){
             steps{
                 script{
-                    bat 'cd sender'
-                    bat 'mvn package'
-
-                    bat 'cd ..'
-                    bat 'cd receiver'
-                    bat 'mvn package'
+                    bat '''
+                        cd sender
+                        mvn package
+                        cd ../receiver
+                        mvn package
+                    '''
                 }
             }
         }
