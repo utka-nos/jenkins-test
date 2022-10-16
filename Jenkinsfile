@@ -94,7 +94,13 @@ pipeline{
                         kubectl get pods
                     '''
                     bat '''
+                        kubectl apply -f ingress.yml
+                    '''
+                    bat '''
                         kubectl get services
+                    '''
+                    bat '''
+                        kubectl get ingress
                     '''
                 }
             }
