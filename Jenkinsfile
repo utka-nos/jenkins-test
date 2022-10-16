@@ -31,6 +31,8 @@ pipeline{
                     bat 'minikube -p minikube docker-env --shell cmd > temp.cmd'
                     bat 'call temp.cmd'
                     bat 'del temp.cmd'
+
+                    bat 'docker images'
                 }
             }
         }
@@ -91,6 +93,15 @@ pipeline{
             }
         }
 
+        stage('unsetting docker env') {
+            steps{
+                script{
+                    bat 'minikube -p minikube docker-env -u --shell cmd > temp.cmd'
+                    bat 'call temp.cmd'
+                    bat 'del temp.cmd'
+                }
+            }
+        }
     }
 
     post{
