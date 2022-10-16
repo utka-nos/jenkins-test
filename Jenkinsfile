@@ -29,7 +29,7 @@ pipeline{
             steps{
                 script{
                     bat '''
-                        @FOR /F "tokens=*" %i IN ('minikube -p minikube docker-env --shell cmd') DO @%i
+                        @FOR /F "tokens=*" %%i IN ('minikube -p minikube docker-env --shell cmd') DO @%i
                     '''
                 }
             }
@@ -95,7 +95,6 @@ pipeline{
 
     post{
         cleanup{
-            bat '@FOR /f "tokens=*" %i IN (\'minikube -p minikube docker-env -u --shell cmd\') DO @%i'
             cleanWs()
         }
     }
