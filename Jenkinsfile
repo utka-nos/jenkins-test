@@ -17,8 +17,31 @@ pipeline{
                     bat '''
                         cd sender
                         mvn package
-                        cd ../receiver
+                    '''
+                    bat '''
+                        cd receiver
                         mvn package
+                    '''
+                }
+            }
+        }
+        stage('build images'){
+            steps{
+                script{
+                    bat '''
+                        docker build -t sender ./sender
+                    '''
+                    bat '''
+                        docker build -t receiver ./receiver
+                    '''
+                }
+            }
+        }
+        stage('test images'){
+            steps{
+                script{
+                    bat '''
+                        docker images
                     '''
                 }
             }
