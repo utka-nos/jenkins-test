@@ -25,6 +25,13 @@ pipeline{
                 }
             }
         }
+        stage('setting docker env') {
+            steps{
+                script{
+                    bat '@FOR /f "tokens=*" %i IN (\'minikube -p minikube docker-env --shell cmd\') DO @%i'
+                }
+            }
+        }
         stage('delete images'){
             steps{
                 script{
@@ -64,13 +71,7 @@ pipeline{
                 }
             }
         }
-        stage('setting docker env') {
-            steps{
-                script{
-                    bat '@FOR /f "tokens=*" %i IN (\'minikube -p minikube docker-env --shell cmd\') DO @%i'
-                }
-            }
-        }
+
         stage('kubectl apply images') {
             steps{
                 script{
@@ -92,6 +93,7 @@ pipeline{
 
     post{
         cleanup{
+            bat '@FOR /f "tokens=*" %i IN (\'minikube -p minikube docker-env -u --shell cmd\') DO @%i'
             cleanWs()
         }
     }
