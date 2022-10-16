@@ -26,9 +26,6 @@ pipeline{
             }
         }
         stage('delete images'){
-            when{
-                docker images | grep sender
-            }
             steps{
                 script{
                     def senderImage = bat(label: '', returnStdout: true, script: "docker images | findstr sender")
