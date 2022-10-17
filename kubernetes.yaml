@@ -16,6 +16,7 @@ spec:
   #Описание подов этого деплоймента
   template:
     metadata:
+      name: sender-pod
       #Очевидно, что должны быть такие же labels, какие мы указали в matchLabels в деплойменте
       labels:
         project: sender-pod
@@ -47,6 +48,7 @@ spec:
   #Описание подов этого деплоймента
   template:
     metadata:
+      name: receiver-pod
       #Очевидно, что должны быть такие же labels, какие мы указали в matchLabels в деплойменте
       labels:
         project: receiver-pod
