@@ -4,13 +4,7 @@ pipeline{
     }
 
     stages{
-        stage('ls'){
-            steps{
-                script{
-                    bat 'dir'
-                }
-            }
-        }
+
         stage('build'){
             steps{
                 script{
@@ -52,7 +46,7 @@ pipeline{
                     bat '''
                         minikube -p minikube docker-env --shell cmd > temp.cmd
                         call temp.cmd
-                        docker images
+
                         del temp.cmd
 
                         docker build -t sender ./sender
@@ -60,19 +54,10 @@ pipeline{
                     bat '''
                         minikube -p minikube docker-env --shell cmd > temp.cmd
                         call temp.cmd
-                        docker images
+
                         del temp.cmd
 
                         docker build -t receiver ./receiver
-                    '''
-                }
-            }
-        }
-        stage('test images'){
-            steps{
-                script{
-                    bat '''
-                        docker images
                     '''
                 }
             }
@@ -84,7 +69,7 @@ pipeline{
                     bat '''
                         minikube -p minikube docker-env --shell cmd > temp.cmd
                         call temp.cmd
-                        docker images
+
                         del temp.cmd
 
                         kubectl apply -f kubernetes.yaml
