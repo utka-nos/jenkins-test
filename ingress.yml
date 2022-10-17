@@ -39,7 +39,7 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx-ingress-controller
+        k8s-app: nginx-ingress-controller
       annotations:
         prometheus.io/port: '10254'
         prometheus.io/scrape: 'true'
