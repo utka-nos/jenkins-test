@@ -48,9 +48,9 @@ spec:
         - image: gcr.io/google_containers/nginx-ingress-controller:1.4.0
           name: nginx-ingress-controller
           ports:
-            - containerPort: 80
+            - containerPort: 8083
               hostPort: 80
-            - containerPort: 443
+            - containerPort: 8433
               hostPort: 443
           env:
             - name: POD_NAME
