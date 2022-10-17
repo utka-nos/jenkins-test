@@ -50,6 +50,7 @@ spec:
     metadata:
       name: receiver-pod
       #Очевидно, что должны быть такие же labels, какие мы указали в matchLabels в деплойменте
+      # По этим labels так же будут искать Services
       labels:
         project: receiver-pod
     spec:
@@ -60,4 +61,26 @@ spec:
           # образ никогда не будет скачиваться из-вне, только из имеющихся уже на устройстве локально
           imagePullPolicy: Never
           ports:
+            # Порт контейнера
             - containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sender-service
+  labels:
+spec:
+  # На какие поды будет работать этот сервис
+  selector:
+    # все поды с таким лейблом
+    project: sender-pod
+  ports:
+    - name: sender-port
+      protocol: TCP
+      # Порт на сервисе
+      port: 8082
+      # Порт на поде
+      targetPort: 8082
+  type: NodePort
+
+
