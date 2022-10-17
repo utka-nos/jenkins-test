@@ -6,6 +6,8 @@ metadata:
   labels:
     app: sender-deploy-label
 spec:
+  # Количество реплик
+  replicas: 1
   # Указывает, с какими подами будет работать деплоймент
   selector:
     #Поды, у которых есть такой label
@@ -22,6 +24,37 @@ spec:
       containers:
         - name: sender-container
           image: sender
+          # образ никогда не будет скачиваться из-вне, только из имеющихся уже на устройстве локально
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8082
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # название деплоймента
+  name: receiver-deployment
+  labels:
+    app: receiver-deploy-label
+spec:
+  # Количество реплик
+  replicas: 1
+  # Указывает, с какими подами будет работать деплоймент
+  selector:
+    #Поды, у которых есть такой label
+    matchLabels:
+      project: receiver-pod
+  #Описание подов этого деплоймента
+  template:
+    metadata:
+      #Очевидно, что должны быть такие же labels, какие мы указали в matchLabels в деплойменте
+      labels:
+        project: receiver-pod
+    spec:
+      #Описываем, какие контейнеры будут в этом поде
+      containers:
+        - name: receiver-container
+          image: receiver
           # образ никогда не будет скачиваться из-вне, только из имеющихся уже на устройстве локально
           imagePullPolicy: Never
           ports:
