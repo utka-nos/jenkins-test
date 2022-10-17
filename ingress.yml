@@ -33,6 +33,9 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: nginx-ingress-controller
   template:
     metadata:
       labels:
