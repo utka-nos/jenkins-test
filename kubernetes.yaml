@@ -79,8 +79,27 @@ spec:
       protocol: TCP
       # Порт на сервисе
       port: 8082
-      # Порт на поде
+      # Порт на поде (в контейнере)
       targetPort: 8082
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: receiver-service
+  labels:
+spec:
+  # На какие поды будет работать этот сервис
+  selector:
+    # все поды с таким лейблом
+    project: receiver-pod
+  ports:
+    - name: receiver-port
+      protocol: TCP
+      # Порт на сервисе
+      port: 8081
+      # Порт на поде (в контейнере)
+      targetPort: 8081
   type: NodePort
 
 
