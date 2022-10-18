@@ -12,8 +12,7 @@ metadata:
   namespace: test-namespace
 spec:
   rules:
-    - host: sender.ru
-      http:
+    - http:
         paths:
           - path: /sender
             pathType: Prefix
@@ -22,8 +21,7 @@ spec:
                 name: sender-service
                 port:
                   number: 8082
-    - host: receiver.ru
-      http:
+    - http:
         paths:
           - path: /receiver
             pathType: Prefix
