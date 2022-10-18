@@ -10,6 +10,8 @@ kind: Ingress
 metadata:
   name: ingress-manifest
   namespace: test-namespace
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - http:
