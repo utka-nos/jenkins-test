@@ -233,6 +233,26 @@ metadata:
 spec:
   controller: nginx.org/ingress-controller
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-service
+  namespace: test-namespace
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+    - port: 443
+      targetPort: 443
+      protocol: TCP
+      name: https
+  selector:
+    app: nginx-pod
+
 
 
 
