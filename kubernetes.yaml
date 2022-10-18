@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   # название деплоймента
   name: sender-deployment
+  namespace: test-namespace
   labels:
     app: sender-deploy-label
 spec:
@@ -35,6 +36,7 @@ kind: Deployment
 metadata:
   # название деплоймента
   name: receiver-deployment
+  namespace: test-namespace
   labels:
     app: receiver-deploy-label
 spec:
@@ -68,6 +70,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sender-service
+  namespace: test-namespace
   labels:
 spec:
   # На какие поды будет работать этот сервис
@@ -87,6 +90,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: receiver-service
+  namespace: test-namespace
   labels:
 spec:
   # На какие поды будет работать этот сервис
