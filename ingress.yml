@@ -6,14 +6,22 @@ spec:
   rules:
     - http:
         paths:
-          - backend:
-              serviceName: sender-service
-              servicePort: 8082
+          - path: /sender
+            pathType: Prefix
+            backend:
+              service:
+                name: sender-service
+                port:
+                  number: 8082
     - http:
         paths:
-          - backend:
-              serviceName: receiver-service
-              servicePort: 8082
+          - path: /receiver
+            pathType: Prefix
+            backend:
+              service:
+                name: receiver-service
+                port:
+                  number: 8081
 
 
 
