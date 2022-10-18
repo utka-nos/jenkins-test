@@ -27,6 +27,36 @@ spec:
                   number: 8081
 ---
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: test-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : nginx-pod
+  template:
+    metadata:
+      labels:
+        app : nginx-pod
+    spec:
+      containers:
+        - image: nginx/nginx-ingress:2.4.0
+          imagePullPolicy: IfNotPresent
+          name: nginx-container
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+            - name: readiness-port
+              containerPort: 8081
+          readinessProbe:
+            httpGet:
+              path: /nginx-ready
+              port: readiness-port
 
 
 
